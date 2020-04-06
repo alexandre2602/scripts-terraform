@@ -1,8 +1,8 @@
 ## internet gateway
-resource "aws_internet_gateway" "eks-igw" {
-  vpc_id = aws_vpc.eks.id
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.vpc.id
 
   tags = {
-    Name = "eks-internet-gateway"
+    Name = "${var.tagName}-internet-gateway"
   }
 }
