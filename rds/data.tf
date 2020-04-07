@@ -1,13 +1,15 @@
 data "aws_availability_zones" "available" {}
 
 data "aws_vpc" "vpc" {
-  id = "${var.vpc_id}"
+  tags = {
+    Name = "gudiao-labs-vpc"
+  }
 }
 
 data "aws_subnet_ids" "private" {
-  vpc_id = "${var.vpc_id}"
+  vpc_id = data.aws_vpc.vpc.id
 
   tags = {
-    Tier = "Private"
+    Name = "gudiao-labs-private-subnet"
   }
 }

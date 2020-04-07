@@ -2,7 +2,7 @@
 resource "aws_security_group" "db-sec-group" {
   name        = "gudiao-labs-db-sec-group"
   description = "Database Security Group"
-  vpc_id      = aws_vpc.eks.id
+  vpc_id      = data.aws_vpc.vpc.id
 
   tags = {
     "Name" = "gudiaoLabs-db-sec-group"

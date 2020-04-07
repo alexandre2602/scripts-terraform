@@ -1,9 +1,13 @@
+resource "random_id" "snapshot" {
+  byte_length = 8
+}
+
 resource "aws_db_subnet_group" "db-subnet-group" {
   name       = "${var.identifier}-db-subnet-group"
   subnet_ids = data.aws_subnet_ids.private.ids
 
    tags = {
-      "Name"        = "${var.tag_default_name}-database"
+      "Name"        = "gudiao-labs-database"
       "Description" = "RDS Database Subnet Group"
       "Service"     = "RDS Database"
    }
@@ -32,12 +36,11 @@ resource "aws_db_instance" "gudiao-labs-db-instance" {
    availability_zone   = data.aws_availability_zones.available.names[0]
    multi_az            = var.multi_az
 
+   skip_final_snapshot = true
    deletion_protection = var.deletion_protection
 
-   final_snapshot_identifier = "${var.db-name}-final"
-
    tags = {
-      "Name"        = "${var.tag_default_name}-database"
+      "Name"        = "gudiao-labs-database"
       "Service"     = "RDS Database"
    }
 
@@ -46,4 +49,9 @@ resource "aws_db_instance" "gudiao-labs-db-instance" {
 #      delete = lookup("5m", "delete", null)
 #      update = lookup("5m", "update", null)
 #   }
+}
+
+resource "aws_db_snapshot" "gudiao-labs-db-snapshot" {
+  db_instance_identifier = aws_db_instance.gudiao-labs-db-instance.id
+  db_snapshot_identifier = join("-", [var.db-name, random_id.snapshot.hex]) 
 }

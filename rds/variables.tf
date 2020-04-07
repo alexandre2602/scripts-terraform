@@ -2,8 +2,6 @@ variable "region" {
   default = "us-east-1"
 }
 
-variable "vpc_id" {}
-
 # Variables RDS Service
 variable "identifier" {
  default = "gudiao-labs-postgres"
