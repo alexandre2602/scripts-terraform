@@ -46,14 +46,11 @@ resource "aws_security_group_rule" "allow_com_nodes_cluster" {
   security_group_id = aws_security_group.eks-sec-group-nodes.id
 }
 
-
-
-
 resource "aws_eks_node_group" "eks_node_group" {
   cluster_name    = aws_eks_cluster.eks-cluster.name
   node_group_name = "eks-gudiao-labs-nodes"
   node_role_arn   = aws_iam_role.eks-node-service-role.arn
-  subnet_ids      = aws_subnet.eks-private.*.id
+  subnet_ids      = data.aws_subnet_ids.private.ids
 
   scaling_config {
     desired_size = 1
