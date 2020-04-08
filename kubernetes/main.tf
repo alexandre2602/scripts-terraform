@@ -7,7 +7,7 @@ provider "aws" {
 terraform {
   backend "s3" {
     bucket = "gudiao-labs-tfstates-terraform"
-    key    = "terraformt.tfstate"
+    key    = "eks/terraformt.tfstate"
     region = "us-east-1"
   }
 }
