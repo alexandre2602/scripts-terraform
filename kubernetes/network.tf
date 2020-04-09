@@ -10,7 +10,7 @@ resource "aws_eip" "eks-gw" {
 
 resource "aws_nat_gateway" "eks-nat-gw" {
   count = length(data.aws_subnet_ids.public.ids)
-  subnet_id     = data.aws_subnet_ids.public.id
+  subnet_id     = sort(data.aws_subnet_ids.public.ids)[count.index]
   allocation_id = element(aws_eip.eks-gw.*.id, count.index)
 
   tags = {
@@ -22,7 +22,7 @@ resource "aws_nat_gateway" "eks-nat-gw" {
 
 resource "aws_route" "r" {
   count = length(data.aws_route_tables.rts.ids)
-  route_table_id            = data.aws_route_tables.rts.id
+  route_table_id            = sort(data.aws_route_tables.rts.ids)[count.index]
   destination_cidr_block    = "0.0.0.0/0"
   nat_gateway_id            = element(aws_nat_gateway.eks-nat-gw.*.id, count.index) 
 

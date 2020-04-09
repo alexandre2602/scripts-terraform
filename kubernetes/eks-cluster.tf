@@ -75,4 +75,8 @@ resource "aws_eks_cluster" "eks-cluster" {
     endpoint_private_access = true
   }
 
+  depends_on = [
+    aws_nat_gateway.eks-nat-gw,
+  ]  
+
 }
