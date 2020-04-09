@@ -2,7 +2,7 @@
 resource "aws_security_group" "eks-sec-group-nodes" {
   name        = "eks-sec-group-nodes"
   description = "Security group for all nodes in the cluster"
-  vpc_id      = aws_vpc.eks.id
+  vpc_id      = data.aws_vpc.vpc.id
 
   tags = {
     "Name"                   = "eks-sec-group-nodes"
@@ -46,7 +46,18 @@ resource "aws_security_group_rule" "allow_com_nodes_cluster" {
   security_group_id = aws_security_group.eks-sec-group-nodes.id
 }
 
-resource "aws_eks_node_group" "eks_node_group" {
+resource "aws_security_group_rule" "demo-cluster-ingress-node-https" {
+  description              = "Allow pods to communicate with the cluster API Server"
+  from_port                = 443
+  protocol                 = "tcp"
+  security_group_id        = aws_security_group.eks-sec-group-cluster.id
+  source_security_group_id = aws_security_group.eks-sec-group-nodes.id
+  to_port                  = 443
+  type                     = "ingress"
+}
+
+
+resource "aws_eks_node_group" "eks-node-group" {
   cluster_name    = aws_eks_cluster.eks-cluster.name
   node_group_name = "eks-gudiao-labs-nodes"
   node_role_arn   = aws_iam_role.eks-node-service-role.arn

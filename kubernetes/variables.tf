@@ -2,13 +2,18 @@ variable "region" {
   default = "us-east-1"
 }
 
+variable "az_count" {
+  default = 2
+}
+
+
 variable "cluster-name" {
   default     = "eks-gudiao"
   description = "Enter eks cluster name - example like eks-demo, eks-dev etc"
 }
 
 variable "eks_version" {
-  default = "1.15"
+  default = "1.14"
 }
 
 variable "eks-worker-ami" {

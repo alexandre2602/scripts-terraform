@@ -2,7 +2,7 @@
 resource "aws_security_group" "eks-sec-group-cluster" {
   name        = "eks-sec-group-cluster"
   description = "Cluster communication with worker nodes"
-  vpc_id      = aws_vpc.eks.id
+  vpc_id      = data.aws_vpc.vpc.id
 
   tags = {
     "Name" = "eks-sec-group-cluster"
@@ -72,6 +72,7 @@ resource "aws_eks_cluster" "eks-cluster" {
   vpc_config {
     security_group_ids = [aws_security_group.eks-sec-group-cluster.id]
     subnet_ids         = data.aws_subnet_ids.private.ids
+    endpoint_private_access = true
   }
 
 }
