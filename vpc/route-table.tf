@@ -23,11 +23,6 @@ resource "aws_route_table" "rt-private" {
   count  = var.az_count
   vpc_id = aws_vpc.vpc.id
 
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = element(aws_nat_gateway.eks-nat-gw.*.id, count.index)
-  }  
-
   tags = {
     "Name"                                      = "${var.tagName}-route-table-private"
     "kubernetes.io/cluster/${var.cluster-name}" = "shared"
