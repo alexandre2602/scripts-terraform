@@ -1,5 +1,5 @@
 resource "aws_eip" "eks-gw" {
-  count = var.az_count
+  count = length(data.aws_subnet_ids.public.ids)
   vpc   = true
 
   tags = {
