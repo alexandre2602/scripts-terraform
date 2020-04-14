@@ -1,5 +1,3 @@
-data "aws_availability_zones" "available" {}
-
 data "aws_vpc" "vpc" {
   tags = {
     Name = "gudiao-labs-vpc"
@@ -30,3 +28,8 @@ data "aws_route_tables" "rts" {
   }
 }
 
+data "aws_security_group" "selected" {
+  tags = {
+    Name = "gudiao-labs-private-sec-group"
+  }
+}
