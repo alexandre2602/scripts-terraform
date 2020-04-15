@@ -104,6 +104,14 @@ resource "aws_security_group_rule" "private-inbound-rule-ssh-mgmt" {
   security_group_id = aws_security_group.private-sec-group.id
 }
 
+resource "aws_security_group_rule" "private-inbound-rule-https" {
+  type              = "ingress"
+  from_port         = 443
+  to_port           = 443
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.private-sec-group.id
+}
 
 resource "aws_security_group_rule" "private-inbound-rule-icmp-mgmt" {
   type              = "ingress"

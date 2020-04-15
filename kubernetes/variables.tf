@@ -13,7 +13,7 @@ variable "cluster-name" {
 }
 
 variable "eks_version" {
-  default = "1.14"
+  default = "1.15"
 }
 
 variable "eks-worker-ami" {
