@@ -20,7 +20,7 @@ variable "eks-worker-ami" {
   default = "ami-0dc7713312a7ec987"
 }
 
-variable "worker-node-instance_type" {
+variable "worker-node-instance-type" {
   default = "t2.micro"
 }
 
